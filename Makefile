@@ -6,7 +6,7 @@
 #    By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/10/18 23:14:58 by pabartoc          #+#    #+#              #
-#    Updated: 2026/10/18 23:20:44 by pabartoc         ###   ########.fr        #
+#    Updated: 2026/10/22 23:32:06 by pabartoc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,15 @@ CFLAGS = -Wall -Wextra -Werror
 # Directory-structur
 SRC_DIR     = src
 INC_DIR     = inc
+LIBFT_DIR   = libft
 
-# sources
-SRCS        = $(SRC_DIR)/
+# The Library
+LIBFT       = $(LIBFT_DIR)/libft.a
+
+# Source Files and Object Files
+SRCS        = $(SRC_DIR)/main.c \
+			  $(SRC_DIR)/exec/executor.c \
+			  $(SRC_DIR)/parsing/parser.c \
 
 OBJS        = $(SRCS:.c=.o)
 
@@ -33,6 +39,10 @@ $(NAME): $(LIBFT) $(OBJS)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# Build the libft
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
 
 clean:
 	@make -C $(LIBFT_DIR) clean
