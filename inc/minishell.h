@@ -6,7 +6,9 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:23:19 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/10/18 23:23:20 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/10/26 02:54:23 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINISHELL_H
+# define MINISHELL_H

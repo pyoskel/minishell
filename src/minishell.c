@@ -6,9 +6,11 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/10/23 17:58:55 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/10/26 02:54:56 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 int	main(int ag, char** av)
 {
