@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:23:19 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/10/26 02:54:23 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/10/27 21:50:28 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#endif
