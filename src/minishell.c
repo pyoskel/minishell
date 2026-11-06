@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/10/28 21:00:17 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/06 19:57:26 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
+
+// for testing: cc -Wall -Wextra -Werror minishell.c -lreadline
 
 int	main(void)
 {
