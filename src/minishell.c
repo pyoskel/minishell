@@ -6,15 +6,11 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/06 19:57:26 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/08 21:56:26 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
+#include "minishell.h"
 
 // for testing: cc -Wall -Wextra -Werror minishell.c -lreadline
 
