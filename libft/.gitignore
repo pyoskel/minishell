@@ -1,0 +1,44 @@
+# ==========================================
+# .gitignore für 42 libft Projekt
+# ==========================================
+
+# 1. Vorlage Makefile
+Makefile.tester
+
+# 2. Kompilierte Objekt- und Bibliotheksdateien
+# Laut Norm darfst du nur den Quellcode (.c, .h, Makefile) pushen.
+*.o
+*.a
+
+# 3. Executables (Ausführbare Dateien)
+a.out
+*.out
+*.exe
+
+# 4. macOS System-Dateien (Kosten extrem oft Punkte bei der Abgabe!)
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# 5. IDEs und Editoren (z.B. VSCode Settings oder Vim Swap-Dateien)
+.vscode/
+*.swp
+*~
+
+# 6. Debugging (Mac generiert diese oft beim Testen mit lldb/gcc)
+*.dSYM/
+
+# 7. Linux / Ubuntu spezifische Dateien
+# Core Dumps (entstehen bei Segmentation Faults und sprengen dein Repo!)
+core
+core.*
+vgcore.*
+
+# Valgrind & Debugging
+.gdb_history
+valgrind-out.txt
+*.log
+
+# Temporäre Dateien von Linux-Editoren (z.B. Nano)
+*.save
