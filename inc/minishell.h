@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:23:19 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/08 21:39:26 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/13 22:12:31 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
-# include "libft/libft.h"
+# include "libft.h"
 
 /* ========================================================================== */
 /*                     2. INTERNAL PARSER STRUCTURES                          */

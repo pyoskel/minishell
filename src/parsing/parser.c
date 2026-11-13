@@ -6,9 +6,10 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:26:33 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/10/26 02:55:38 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/13 21:58:08 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 
