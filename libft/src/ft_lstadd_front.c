@@ -6,18 +6,18 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:00:57 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/05/28 19:59:22 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/14 17:33:56 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *new_node)
 {
-	if (!lst || !new)
+	if (!lst || !new_node)
 		return ;
-	new->next = *lst;
-	*lst = new;
+	new_node->next = *lst;
+	*lst = new_node;
 }
 
 // void    print_list(t_list *lst)
@@ -50,14 +50,14 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 //     // -------------------------------------------------------------
 //     // 2. Wir erstellen unseren NEUEN Knoten
 //     // -------------------------------------------------------------
-//     t_list *new_node = malloc(sizeof(t_list));
-//     new_node->content = strdup("Knoten NEU");
-//     new_node->next = NULL; // Zeigt vorerst ins Leere
+//     t_list *new_node_node = malloc(sizeof(t_list));
+//     new_node_node->content = strdup("Knoten NEU");
+//     new_node_node->next = NULL; // Zeigt vorerst ins Leere
 
 //     // 3. Wir rufen die Funktion auf! 
 //     // Wir übergeben die ADRESSE unseres Hauptzeigers (&mylist)
 //     // und den neuen Knoten.
-//     ft_lstadd_front(&mylist, new_node);
+//     ft_lstadd_front(&mylist, new_node_node);
 
 //     printf("--- NACH ft_lstadd_front ---\n");
 //     print_list(mylist);
@@ -67,7 +67,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 //     // -------------------------------------------------------------
 //     free(nodeA->content); free(nodeA);
 //     free(nodeB->content); free(nodeB);
-//     free(new_node->content); free(new_node);
+//     free(new_node_node->content); free(new_node_node);
 
 //     return (0);
 // }

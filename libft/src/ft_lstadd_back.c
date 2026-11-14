@@ -6,25 +6,25 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:04:49 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/05/28 19:58:22 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/14 17:33:43 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new_node)
 {
 	t_list	*last_node;
 
-	if (!lst || !new)
+	if (!lst || !new_node)
 		return ;
 	if (*lst == NULL)
 	{
-		*lst = new;
+		*lst = new_node;
 		return ;
 	}
 	last_node = ft_lstlast(*lst);
-	last_node->next = new;
+	last_node->next = new_node;
 }
 
 // void    print_list(t_list *lst)
@@ -82,23 +82,23 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 // -------------------------------------------------------------
 // with explanation
 // -------------------------------------------------------------
-// void	ft_lstadd_back(t_list **lst, t_list *new)
+// void	ft_lstadd_back(t_list **lst, t_list *new_node)
 // {
 // 	t_list	*last_node;
 
 // 	// 1. Sicherheitsabfrage
-// 	if (!lst || !new)
+// 	if (!lst || !new_node)
 // 		return ;
 
 // 	// 2. Sonderfall: Die Liste ist komplett leer
 // 	if (*lst == NULL)
 // 	{
 // 		// Der neue Knoten wird zum ersten Knoten
-// 		*lst = new;
+// 		*lst = new_node;
 // 		return ;
 // 	}
 
-// 	// 3. Normalfall: Suche das letzte Element und hänge "new" an
+// 	// 3. Normalfall: Suche das letzte Element und hänge "new_node" an
 // 	last_node = ft_lstlast(*lst);
-// 	last_node->next = new;
+// 	last_node->next = new_node;
 // }
