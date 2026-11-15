@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:48 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/14 18:20:27 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/15 20:26:25 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@ typedef struct s_token
 }					t_token;
 
 t_token	*tokenize_words(const char *line);
+void	free_tokens(t_token *tokens);
+void	print_tokens(t_token *tokens);
 
 #endif
