@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:23:19 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/13 22:12:31 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/14 20:05:45 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 /*                             1. INCLUDES                                    */
 /* ========================================================================== */
 
+# include <unistd.h>
+# include <sys/wait.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
