@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/15 19:19:16 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/21 03:34:43 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include "exec.h"
 
 // for testing: cc -Wall -Wextra -Werror minishell.c -lreadline
-
-int	main(int ac, char **av, char **envp)
+// , char **envp
+int	main(int ac, char **av)
 {
     char *input;
-    char **args;
+    // char **args;
 	t_token	*tokens; //for print_tokens (delete later)
     
     (void)ac;
@@ -28,17 +28,17 @@ int	main(int ac, char **av, char **envp)
     while (1)
     {
         input = readline("minishell$ ");
+        if (!input) // Ctrl+D
+			break;
 		tokens = tokenize_words(input);
 		print_tokens(tokens);
 		free_tokens(tokens);
-        if (!input) // Ctrl+D
-            break;
-        if (input[0] != '\0')
-        {
-            args = tokenize_words(input);
-            exec_simple(args, envp);
-            free_tab(args);
-        }
+        // if (input[0] != '\0')
+        // {
+        //     args = ft_split(input, ' ');
+        //     exec_simple(args, envp);
+        //     free_tab(args);
+        // }
         free(input);
     }
     printf("\nExit\n");
