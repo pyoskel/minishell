@@ -6,17 +6,60 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 11:53:36 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/15 11:07:22 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/21 03:56:37 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exec.h"
 
+static char *get_path_env(char **envp)
+{
+    int i;
+
+    i = 0;
+    while(envp && envp[i])
+    {
+        if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+            return (envp[i] + 5);
+        i++;
+    }
+    return (NULL);
+}
+
+static char *find_path(char *cmd, char **envp)
+{
+    char **dirs;
+    char *part_path;
+    char *full_path;
+    int i;
+
+    if (!cmd || !*cmd)
+        return (NULL);
+    if (ft_strchr(cmd, '/'))
+        return (ft_strdup(cmd));
+    dirs = ft_split(get_path_env(envp), ':');
+    if (!dirs)
+        return (NULL);
+    i = 0;
+    while (dirs[i])
+    {
+        part_path = ft_strjoin(dirs[i], "/");
+        full_path = ft_strjoin(part_path, cmd);
+        free(part_path);
+        if (full_path && access(full_path, X_OK) == 0)
+            return (free_tab(dirs), full_path);
+        free(full_path);
+        i++;
+    }
+    return (free_tab(dirs), NULL);
+}
+
 int exec_simple(char **av, char **envp)
 {
     pid_t   pid;
     int     status;
+    char    *path;
 
     if (!av || !av[0])
         return (0);
@@ -25,8 +68,16 @@ int exec_simple(char **av, char **envp)
         return (perror("fork"), 1);
     if (pid == 0)
     {
-        execve(av[0], av, envp);
+        path = find_path(av[0], envp);
+        if (!path)
+        {
+            ft_putstr_fd(av[0], 2);
+            ft_putstr_fd(": command not found\n", 2);
+            exit(127);
+        }
+        execve(path, av, envp);
         perror(av[0]);
+        free(path);
         exit(127); // command not found
     }
     waitpid(pid, &status, 0);
