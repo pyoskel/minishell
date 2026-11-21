@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:26:33 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/15 19:43:19 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/21 00:59:34 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	is_space(char c)
 {
-	return (c == ' ');
+	return (c == ' ' || c == '\t');
 }
 
 static t_token *create_token(char *content)
@@ -64,7 +64,7 @@ t_token	*tokenize_words(const char *line)
 		while (line[i] && !is_space(line[i]))
 			i++;
 		node = create_token(ft_substr(line, start, i - start));
-		if (!node)
+		if (!node || !node->value)
 			return (free(node), free_tokens(head), NULL);
 		add_token_back(&head, node);
 	}
