@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/21 03:34:43 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/22 01:37:57 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	print_tokens(t_token *tokens)
 	i = 0;
 	while (tokens)
 	{
-		printf("Token %d: [%s]\n", i, tokens->value);
+		printf("Token %d (type %d): [%s]\n", i, tokens->type, tokens->value);
 		tokens = tokens->next;
 		i++;
 	}
