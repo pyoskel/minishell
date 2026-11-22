@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/10/18 23:14:58 by pabartoc          #+#    #+#              #
-#    Updated: 2026/11/15 19:11:38 by pabartoc         ###   ########.fr        #
+#    Updated: 2026/11/22 05:53:08 by esttina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 SRCS        = $(SRC_DIR)/minishell.c \
 			  $(SRC_DIR)/exec/executor.c \
 			  $(SRC_DIR)/parsing/parser.c \
-			  $(SRC_DIR)/parsing/free_tokens.c
+			  $(SRC_DIR)/parsing/free_tokens.c \
+			  $(SRC_DIR)/exec/builtins.c
 
 OBJS        = $(SRCS:.c=.o)
 

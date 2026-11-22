@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 11:53:36 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/22 03:12:08 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/22 05:54:14 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int exec_simple(char **av, char **envp)
 
     if (!av || !av[0])
         return (0);
+    if (is_builtin(av[0]))
+        return (exec_builtin(av));
     pid = fork();
     if (pid == -1)
         return (perror("fork"), 1);
