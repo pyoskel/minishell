@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/21 03:34:43 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/22 03:22:33 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 // for testing: cc -Wall -Wextra -Werror minishell.c -lreadline
 // , char **envp
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
     char *input;
-    // char **args;
+    char **args;
 	t_token	*tokens; //for print_tokens (delete later)
     
     (void)ac;
@@ -30,9 +30,13 @@ int	main(int ac, char **av)
         input = readline("minishell$ ");
         if (!input) // Ctrl+D
 			break;
-		tokens = tokenize_words(input);
-		print_tokens(tokens);
-		free_tokens(tokens);
+        tokens = tokenize_words(input);
+        print_tokens(tokens);
+        args = tokens_to_av(tokens);
+        free_tokens(tokens);
+        if (args && args[0])
+            exec_simple(args, envp);
+        free_tab(args);
         // if (input[0] != '\0')
         // {
         //     args = ft_split(input, ' ');
