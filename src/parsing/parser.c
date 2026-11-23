@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:26:33 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/23 06:44:49 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/23 08:18:04 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ static int	word_len_quote(const char *s)
 		len++;
 	}
 	if (quote != 0)
+	{
+		printf("minishell: syntax error: unclosed quote\n");
 		return (-1);
+	}
 	return(len);
 }
 
@@ -85,11 +88,8 @@ t_token	*tokenize_words(const char *line)
 		else
 		{
 			if (word_len_quote(&line[i]) < 0)
-			{
-				printf("minishell: syntax error: unclosed quote\n");
 				return (free_tokens(head), NULL);
-			}
-				i+= word_len(&line[i]);
+			i+= word_len_quote(&line[i]);
 		}
 		node = create_token(ft_substr(line, start, i - start));
 		if (!node)
