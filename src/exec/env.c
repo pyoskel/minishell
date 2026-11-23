@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/23 16:35:01 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/23 17:11:37 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/23 23:13:48 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,22 @@ char **dup_env(char **envp)
     }
     copy[i] = NULL;
     return (copy);
+}
+
+char    *get_env_value(char **env, char *name)
+{
+    int     i;
+    size_t  len;
+
+    if (!env || !name)
+        return (NULL);
+    len = ft_strlen(name);
+    i = 0;
+    while (env[i])
+    {
+        if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
+            return (env[i] + len + 1);
+        i++;
+    }
+    return (NULL);
 }

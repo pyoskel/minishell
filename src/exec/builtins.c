@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/22 05:44:13 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/23 17:26:04 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/23 23:07:57 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,25 @@ static int  builtin_exit(char **av, t_shell *shell)
     exit(code);
 }
 
+static int  builtin_cd(char **av, t_shell *shell)
+{
+    char    *target;
+    
+    if (av[1] && av[2])
+        return (ft_putendl_fd("minishell: cd: too many arguments", 2), 1);
+    if (!av[1])
+    {
+        target = get_env_value(shell->env, "HOME");
+        if (!target)
+            return (ft_putendl_fd("minishell: cd: HOME not set", 2), 1);
+    }
+    else
+        target = av[1];
+    if (chdir((target)) == -1)
+        return (perror("minishell: cd"), 1);
+    return (0);
+}
+
 int is_builtin(char *cmd)
 {
     if (!cmd)
@@ -135,6 +154,8 @@ int is_builtin(char *cmd)
     if (ft_strncmp(cmd, "env", 4) == 0)
         return (1);
     if (ft_strncmp(cmd, "exit", 5) == 0)
+        return (1);
+    if (ft_strncmp(cmd, "cd", 3) == 0)
         return (1);
     return (0);
 }
@@ -149,5 +170,7 @@ int exec_builtin(char **av, t_shell *shell)
         return (builtin_env(shell->env));
     if (ft_strncmp(av[0], "exit", 5) == 0)
         return (builtin_exit(av, shell));
+    if (ft_strncmp(av[0], "cd", 3) == 0)
+        return (builtin_cd(av, shell));
     return (1);
 }
