@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 11:53:36 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/23 07:52:05 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/23 17:20:47 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static char *find_path(char *cmd, char **envp)
     return (free_tab(dirs), NULL);
 }
 
-int exec_simple(char **av, char **envp, int last_status)
+int exec_simple(char **av, t_shell *shell)
 {
     pid_t   pid;
     int     status;
@@ -99,20 +99,20 @@ int exec_simple(char **av, char **envp, int last_status)
     if (!av || !av[0])
         return (0);
     if (is_builtin(av[0]))
-        return (exec_builtin(av, envp, last_status));
+        return (exec_builtin(av, shell));
     pid = fork();
     if (pid == -1)
         return (perror("fork"), 1);
     if (pid == 0)
     {
-        path = find_path(av[0], envp);
+        path = find_path(av[0], shell->env);
         if (!path)
         {
             ft_putstr_fd(av[0], 2);
             ft_putstr_fd(": command not found\n", 2);
             exit(127);
         }
-        execve(path, av, envp);
+        execve(path, av, shell->env);
         perror(av[0]);
         free(path);
         exit(127); // command not found

@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/22 05:44:13 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/23 07:48:49 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/23 17:26:04 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int  is_numeric(char *s)
     return (1);
 }
 
-static int  builtin_exit(char **av, int last_status)
+static int  builtin_exit(char **av, t_shell *shell)
 {
     int code;
 
@@ -104,7 +104,8 @@ static int  builtin_exit(char **av, int last_status)
     if (!av[1])
     {
         free_tab(av);
-        exit(last_status);
+        free_tab(shell->env);
+        exit(shell->last_status);
     }
     if (!is_numeric(av[1]))
     {
@@ -112,12 +113,14 @@ static int  builtin_exit(char **av, int last_status)
         ft_putstr_fd(av[1], 2);
         ft_putendl_fd(": numeric argument required", 2);
         free_tab(av);
+        free_tab(shell->env);
         exit(2);
     }
     if (av[2])
         return (ft_putendl_fd("minishell: exit: too many arguments", 2), 1);
     code = ft_atoi(av[1]);
     free_tab(av);
+    free_tab(shell->env);
     exit(code);
 }
 
@@ -136,15 +139,15 @@ int is_builtin(char *cmd)
     return (0);
 }
 
-int exec_builtin(char **av, char **envp, int last_status)
+int exec_builtin(char **av, t_shell *shell)
 {
     if (ft_strncmp(av[0], "pwd", 4) == 0)
         return (builtin_pwd());
     if (ft_strncmp(av[0], "echo", 5) == 0)
         return (builtin_echo(av));
     if (ft_strncmp(av[0], "env", 4) == 0)
-        return (builtin_env(envp));
+        return (builtin_env(shell->env));
     if (ft_strncmp(av[0], "exit", 5) == 0)
-        return (builtin_exit(av, last_status));
+        return (builtin_exit(av, shell));
     return (1);
 }

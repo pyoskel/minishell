@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/23 16:23:23 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/23 17:27:22 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int	main(int ac, char **av, char **envp)
     char *input;
     char **args;
 	t_token	*tokens; //for print_tokens (delete later)
-    int last_status;
+    t_shell shell;
     
     (void)ac;
     (void)av;
     
-    last_status = 0;
+    shell.env = dup_env(envp);
+    shell.last_status = 0;
     while (1)
     {
         input = readline("minishell$ ");
@@ -38,7 +39,7 @@ int	main(int ac, char **av, char **envp)
         args = tokens_to_av(tokens);
         free_tokens(tokens);
         if (args && args[0])
-            last_status = exec_simple(args, envp, last_status);
+            shell.last_status = exec_simple(args, &shell);
         free_tab(args);
         // if (input[0] != '\0')
         // {
@@ -47,8 +48,9 @@ int	main(int ac, char **av, char **envp)
         //     free_tab(args);
         // }
     }
+    free_tab(shell.env);
     printf("\nExit\n");
-    return (last_status);
+    return (shell.last_status);
 }
 
 void	print_tokens(t_token *tokens)
