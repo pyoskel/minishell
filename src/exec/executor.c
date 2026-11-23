@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 11:53:36 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/23 03:05:53 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/23 07:52:05 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static char *find_path(char *cmd, char **envp)
     return (free_tab(dirs), NULL);
 }
 
-int exec_simple(char **av, char **envp)
+int exec_simple(char **av, char **envp, int last_status)
 {
     pid_t   pid;
     int     status;
@@ -99,7 +99,7 @@ int exec_simple(char **av, char **envp)
     if (!av || !av[0])
         return (0);
     if (is_builtin(av[0]))
-        return (exec_builtin(av, envp));
+        return (exec_builtin(av, envp, last_status));
     pid = fork();
     if (pid == -1)
         return (perror("fork"), 1);
