@@ -6,7 +6,7 @@
 #    By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/10/18 23:14:58 by pabartoc          #+#    #+#              #
-#    Updated: 2026/11/23 16:35:39 by esttina          ###   ########.fr        #
+#    Updated: 2026/11/24 05:27:49 by esttina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 SRCS        = $(SRC_DIR)/minishell.c \
 			  $(SRC_DIR)/exec/executor.c \
 			  $(SRC_DIR)/parsing/parser.c \
-			  $(SRC_DIR)/parsing/free_tokens.c \
+			  $(SRC_DIR)/parsing/tokens_list.c \
 			  $(SRC_DIR)/exec/builtins.c \
 			  $(SRC_DIR)/exec/env.c
 
