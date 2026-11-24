@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/22 05:44:13 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/24 05:15:22 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/24 07:38:39 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,19 @@ static int  builtin_cd(char **av, t_shell *shell)
     return (0);
 }
 
+static int  builtin_unset(char **av, t_shell *shell)
+{
+    int i;
+
+    i = 1;
+    while (av[i])
+    {
+        unset_env_value(shell, av[i]);
+        i++;
+    }
+    return (0);
+}
+
 int is_builtin(char *cmd)
 {
     if (!cmd)
@@ -164,6 +177,8 @@ int is_builtin(char *cmd)
     if (ft_strncmp(cmd, "exit", 5) == 0)
         return (1);
     if (ft_strncmp(cmd, "cd", 3) == 0)
+        return (1);
+    if (ft_strncmp(cmd, "unset", 6) == 0)
         return (1);
     return (0);
 }
@@ -180,5 +195,7 @@ int exec_builtin(char **av, t_shell *shell)
         return (builtin_exit(av, shell));
     if (ft_strncmp(av[0], "cd", 3) == 0)
         return (builtin_cd(av, shell));
+    if (ft_strncmp(av[0], "unset", 6) == 0)
+        return (builtin_unset(av, shell));
     return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/23 16:35:01 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/24 05:05:51 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/24 07:33:41 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,20 @@ int set_env_value(t_shell *shell, char *name, char *value)
         return (0);
     }
     return (add_env_entry(shell, entry));
+}
+
+void    unset_env_value(t_shell *shell, char *name)
+{
+    int idx;
+
+    idx = find_env_index(shell->env, name);
+    if (idx < 0)
+        return ;
+    free(shell->env[idx]);
+    while (shell->env[idx + 1])
+    {
+        shell->env[idx] = shell->env[idx + 1];
+        idx++;
+    }
+    shell->env[idx] = NULL;
 }

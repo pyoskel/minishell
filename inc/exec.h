@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 17:57:04 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/24 05:13:23 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/24 07:39:26 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int     exec_builtin(char **av, t_shell *shell);
 char    **dup_env(char **envp);
 char    *get_env_value(char **env, char *name);
 int     set_env_value(t_shell *shell, char *name, char *value);
+void    unset_env_value(t_shell *shell, char *name);
 
 #endif
