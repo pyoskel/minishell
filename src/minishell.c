@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/23 17:27:22 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/24 04:43:14 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "parsing.h"
 #include "exec.h"
 
-// for testing: cc -Wall -Wextra -Werror minishell.c -lreadline
-// , char **envp
 int	main(int ac, char **av, char **envp)
 {
     char *input;

@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/22 05:44:13 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/23 23:07:57 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/24 05:15:22 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,9 @@ static int  builtin_exit(char **av, t_shell *shell)
 static int  builtin_cd(char **av, t_shell *shell)
 {
     char    *target;
+    char    old_cwd[4096];
+    char    new_cwd[4096];
+    int     has_old;
     
     if (av[1] && av[2])
         return (ft_putendl_fd("minishell: cd: too many arguments", 2), 1);
@@ -138,8 +141,13 @@ static int  builtin_cd(char **av, t_shell *shell)
     }
     else
         target = av[1];
+    has_old = (getcwd(old_cwd, sizeof(old_cwd)) != NULL);
     if (chdir((target)) == -1)
         return (perror("minishell: cd"), 1);
+    if (has_old)
+        set_env_value(shell, "OLDPWD", old_cwd);
+    if (getcwd(new_cwd, sizeof(new_cwd)) != NULL)
+        set_env_value(shell, "PWD", new_cwd);
     return (0);
 }
 
