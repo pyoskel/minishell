@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/10/18 23:14:58 by pabartoc          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2026/11/24 04:41:33 by pabartoc         ###   ########.fr        #
+=======
+#    Updated: 2026/11/24 05:27:49 by esttina          ###   ########.fr        #
+>>>>>>> refs/remotes/github/master
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +32,12 @@ SRCS        = $(SRC_DIR)/minishell.c \
 			  $(SRC_DIR)/exec/executor.c \
 			  $(SRC_DIR)/parsing/parser.c \
 			  $(SRC_DIR)/parsing/tokens_list.c \
+<<<<<<< HEAD
 			  $(SRC_DIR)/parsing/syntax_check.c
+=======
+			  $(SRC_DIR)/exec/builtins.c \
+			  $(SRC_DIR)/exec/env.c
+>>>>>>> refs/remotes/github/master
 
 OBJS        = $(SRCS:.c=.o)
 
