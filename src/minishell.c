@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/24 05:34:58 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/24 06:30:49 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,17 @@ int	main(int ac, char **av, char **envp)
 			break;
         tokens = tokenize_words(input);
         free(input);
-        print_tokens(tokens);
-        args = tokens_to_av(tokens);
-        free_tokens(tokens);
-        if (args && args[0])
-            shell.last_status = exec_simple(args, &shell);
-        free_tab(args);
-        // if (input[0] != '\0')
-        // {
-        //     args = ft_split(input, ' ');
-        //     exec_simple(args, envp);
-        //     free_tab(args);
-        // }
+        if (tokens && validate_syntax(tokens))
+		{
+			print_tokens(tokens);
+			args = tokens_to_av(tokens);
+			free_tokens(tokens);
+			if (args && args[0])
+				shell.last_status = exec_simple(args, &shell);
+			free_tab(args);
+		}
+        else
+			free_tokens(tokens);
     }
     free_tab(shell.env);
     printf("\nExit\n");
