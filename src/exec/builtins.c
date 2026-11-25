@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/22 05:44:13 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/24 07:38:39 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/25 07:40:41 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,130 @@ static int  builtin_unset(char **av, t_shell *shell)
     return (0);
 }
 
+static int  is_valid_id(char *s)
+{
+    int i;
+    
+    if (!s || (!ft_isalpha(s[0]) && s[0] != '_'))
+        return (0);
+    i = 1;
+    while (s[i] && s[i] != '=')
+    {
+        if (!ft_isalnum(s[i]) && s[i] != '_')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+static void export_one(char *arg, t_shell *shell)
+{
+    char    *eq;
+    char    *name;
+    
+    eq = ft_strchr(arg, '=');
+    if (!eq)
+    {
+        if (!get_env_value(shell->env, arg))
+            set_env_value(shell, arg, NULL);
+        return ;
+    }
+    name = ft_substr(arg, 0, eq - arg);
+    if (!name)
+        return ;
+    set_env_value(shell, name, eq + 1);
+    free(name);
+}
+
+static void print_export_line(char *entry)
+{
+    char *eq;
+    
+    eq = ft_strchr(entry, '=');
+    ft_putstr_fd("declare -x ", 1);
+    if (!eq)
+    {
+        ft_putendl_fd(entry, 1);
+        return ;
+    }
+    write(1, entry, eq- entry);
+    ft_putstr_fd("=\"", 1);
+    ft_putstr_fd(eq + 1, 1);
+    ft_putendl_fd("\"", 1);
+}
+
+static  void sort_tab(char **tab)
+{
+    int i;
+    int j;
+    char *tmp;
+
+    i = 0;
+    while (tab[i])
+    {
+        j = 0;
+        while (tab[j + 1])
+        {
+            if (ft_strncmp(tab[j], tab[j + 1], ft_strlen(tab[j]) + 1) > 0)
+            {
+                tmp = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = tmp;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+static int  print_sorted_export(char **env)
+{
+    char **copy;
+    int     i;
+
+    i = 0;
+    while (env && env[i])
+        i++;
+    copy = malloc(sizeof(char *) * (i + 1));
+    if (!copy)
+        return (1);
+    i = -1;
+    while (env && env[++i])
+        copy[i] = env[i];
+    copy[i] = NULL;
+    sort_tab(copy);
+    i = 0;
+    while (copy[i])
+        print_export_line(copy[i++]);
+    free(copy);
+    return (0);
+}
+
+static int  builtin_export(char **av, t_shell *shell)
+{
+    int     i;
+    int     status;
+
+    if (!av[1])
+        return (print_sorted_export(shell->env));
+    status = 0;
+    i = 1;
+    while (av[i])
+    {
+        if (!is_valid_id(av[i]))
+        {
+            ft_putstr_fd("minishell: export: '", 2);
+            ft_putstr_fd(av[i], 2);
+            ft_putendl_fd("': not a valid identifier", 2);
+            status = 1;
+        }
+        else
+            export_one(av[i], shell);
+        i++;
+    }
+    return (status);
+}
+
 int is_builtin(char *cmd)
 {
     if (!cmd)
@@ -179,6 +303,8 @@ int is_builtin(char *cmd)
     if (ft_strncmp(cmd, "cd", 3) == 0)
         return (1);
     if (ft_strncmp(cmd, "unset", 6) == 0)
+        return (1);
+    if (ft_strncmp(cmd, "export", 7) == 0)
         return (1);
     return (0);
 }
@@ -197,5 +323,7 @@ int exec_builtin(char **av, t_shell *shell)
         return (builtin_cd(av, shell));
     if (ft_strncmp(av[0], "unset", 6) == 0)
         return (builtin_unset(av, shell));
+    if (ft_strncmp(av[0], "export", 7) == 0)
+        return (builtin_export(av, shell));
     return (1);
 }
