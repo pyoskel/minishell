@@ -6,7 +6,7 @@
 #    By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/10/18 23:14:58 by pabartoc          #+#    #+#              #
-#    Updated: 2026/11/24 05:27:49 by esttina          ###   ########.fr        #
+#    Updated: 2026/11/25 20:11:16 by esttina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS        = $(SRC_DIR)/minishell.c \
 			  $(SRC_DIR)/parsing/parser.c \
 			  $(SRC_DIR)/parsing/tokens_list.c \
 			  $(SRC_DIR)/exec/builtins.c \
-			  $(SRC_DIR)/exec/env.c
+			  $(SRC_DIR)/exec/env.c \
+			  $(SRC_DIR)/exec/redirs.c
 
 OBJS        = $(SRCS:.c=.o)
 
