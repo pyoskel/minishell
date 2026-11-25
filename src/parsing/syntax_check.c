@@ -34,7 +34,7 @@ int	validate_syntax(t_token *tokens)
 			&& (!curr->next || curr->next->type == TOKEN_PIPE))
 			return (syntax_error("|"));
 		if (curr->type >= TOKEN_REDIR_IN && !curr->next)
-			return(syntax_error("newline"));
+			return (syntax_error("newline"));
 		if (curr->type >= TOKEN_REDIR_IN && curr->next->type != TOKEN_WORD)
 			return (syntax_error(curr->next->value));
 		curr = curr->next;
