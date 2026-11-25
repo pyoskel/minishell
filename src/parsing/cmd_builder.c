@@ -16,6 +16,7 @@
 static int	count_args(t_token *curr)
 {
 	int	count;
+
 	count = 0;
 	while (curr && curr->type != TOKEN_PIPE)
 	{
@@ -34,6 +35,7 @@ static int	add_redir(t_cmd *cmd, t_token *curr)
 {
 	t_redir	*node;
 	t_redir	*last;
+
 	node = malloc(sizeof(t_redir));
 	if (!node)
 		return (0);
