@@ -14,40 +14,6 @@
 #include "exec.h"
 #include "parsing.h"
 
-static int  count_tokens(t_token *tokens)
-{
-    int count;
-    
-    count = 0;
-    while (tokens)
-    {
-        count++;
-        tokens = tokens->next;
-    }
-    return (count);
-}
-
-char **tokens_to_av(t_token *tokens)
-{
-    char    **av;
-    int     i;
-    
-    av = malloc(sizeof(char*) * (count_tokens(tokens) + 1));
-    if (!av)
-        return (NULL);
-    i = 0;
-    while (tokens)
-    {
-        av[i] = ft_strdup(tokens->value);
-        if (!av[i])
-            return (free_tab(av), NULL);
-        tokens = tokens->next;
-        i++;
-    }
-    av[i] = NULL;
-    return (av);
-}
-
 static char *get_path_env(char **envp)
 {
     int i;
