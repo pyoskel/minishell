@@ -6,14 +6,14 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 19:10:31 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/25 19:58:49 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/25 22:27:05 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-t_token *create_token(char *content)
+t_token	*create_token(char *content)
 {
 	t_token	*node;
 
@@ -27,9 +27,10 @@ t_token *create_token(char *content)
 	node->next = NULL;
 	return (node);
 }
+
 void	add_token_back(t_token **head, t_token *new_node)
 {
-	t_token *last_node;
+	t_token	*last_node;
 
 	if (!*head)
 	{
@@ -44,7 +45,7 @@ void	add_token_back(t_token **head, t_token *new_node)
 
 void	free_tokens(t_token *tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	while (tokens)
 	{
