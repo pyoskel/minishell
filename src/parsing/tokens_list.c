@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 19:10:31 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/22 01:26:29 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/25 19:58:49 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,36 @@ void	free_tokens(t_token *tokens)
 		free(tokens->value);
 		free(tokens);
 		tokens = tmp;
+	}
+}
+
+static void	free_redirs(t_redir *redirs)
+{
+	t_redir	*tmp;
+
+	while (redirs)
+	{
+		tmp = redirs->next;
+		free(redirs->target);
+		free(redirs);
+		redirs = tmp;
+	}
+}
+
+void	free_cmds(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	while (cmds)
+	{
+		tmp = cmds->next;
+		i = 0;
+		while (cmds->args && cmds->args[i])
+			free(cmds->args[i++]);
+		free(cmds->args);
+		free_redirs(cmds->redirs);
+		free(cmds);
+		cmds = tmp;
 	}
 }

@@ -14,40 +14,6 @@
 #include "exec.h"
 #include "parsing.h"
 
-static int  count_tokens(t_token *tokens)
-{
-    int count;
-    
-    count = 0;
-    while (tokens)
-    {
-        count++;
-        tokens = tokens->next;
-    }
-    return (count);
-}
-
-char **tokens_to_av(t_token *tokens)
-{
-    char    **av;
-    int     i;
-    
-    av = malloc(sizeof(char*) * (count_tokens(tokens) + 1));
-    if (!av)
-        return (NULL);
-    i = 0;
-    while (tokens)
-    {
-        av[i] = ft_strdup(tokens->value);
-        if (!av[i])
-            return (free_tab(av), NULL);
-        tokens = tokens->next;
-        i++;
-    }
-    av[i] = NULL;
-    return (av);
-}
-
 static char *get_path_env(char **envp)
 {
     int i;
@@ -96,19 +62,19 @@ int exec_simple(t_cmd *cmd, t_shell *shell)
     int     status;
     char    *path;
 
-    if (!cmd || !cmd->av || !cmd->av[0])
+    if (!cmd || !cmd->args || !cmd->args[0])
         return (0);
-    if (is_builtin(cmd->av[0]))
-        return (exec_builtin(cmd->av, shell));
+    if (is_builtin(cmd->args[0]))
+        return (exec_builtin(cmd->args, shell));
     pid = fork();
     if (pid == -1)
         return (perror("fork"), 1);
     if (pid == 0)
     {
-        path = find_path(cmd->av[0], shell->env);
+        path = find_path(cmd->args[0], shell->env);
         if (!path)
         {
-            ft_putstr_fd(cmd->av[0], 2);
+            ft_putstr_fd(cmd->args[0], 2);
             ft_putstr_fd(": command not found\n", 2);
             exit(127);
         }
@@ -117,8 +83,8 @@ int exec_simple(t_cmd *cmd, t_shell *shell)
             free(path);
             exit(1);
         }
-        execve(path, cmd->av, shell->env);
-        perror(cmd->av[0]);
+        execve(path, cmd->args, shell->env);
+        perror(cmd->args[0]);
         free(path);
         exit(127); // command not found
     }

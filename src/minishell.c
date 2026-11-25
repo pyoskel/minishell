@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/24 05:34:58 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/25 20:33:26 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 int	main(int ac, char **av, char **envp)
 {
     char *input;
-    char **args;
-	t_token	*tokens; //for print_tokens (delete later)
+	t_token	*tokens;
+	t_cmd	*cmds;
     t_shell shell;
     
     (void)ac;
@@ -33,33 +33,70 @@ int	main(int ac, char **av, char **envp)
 			break;
         tokens = tokenize_words(input);
         free(input);
-        print_tokens(tokens);
-        args = tokens_to_av(tokens);
-        free_tokens(tokens);
-        if (args && args[0])
-            shell.last_status = exec_simple(args, &shell);
-        free_tab(args);
-        // if (input[0] != '\0')
-        // {
-        //     args = ft_split(input, ' ');
-        //     exec_simple(args, envp);
-        //     free_tab(args);
-        // }
+        if (tokens && validate_syntax(tokens))
+		{
+			expand_tokens(tokens, shell.env, shell.last_status);
+			cmds = build_cmds(tokens);
+			free_tokens(tokens);
+			print_cmds(cmds);
+			if (cmds && cmds->args && cmds->args[0])
+				shell.last_status = exec_simple(cmds, &shell);
+			free_cmds(cmds);
+		}
+        else if (tokens)
+		{
+			shell.last_status = 2;
+			free_tokens(tokens);
+		}
     }
     free_tab(shell.env);
     printf("\nExit\n");
     return (shell.last_status);
 }
 
-void	print_tokens(t_token *tokens)
-{
-	int	i;
+// after free_tokens(tokens);
+// print_tokens(tokens); //for debugging
 
-	i = 0;
-	while (tokens)
+// void	print_tokens(t_token *tokens)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (tokens)
+// 	{
+// 		printf("Token %d (type %d): [%s]\n", i, tokens->type, tokens->value);
+// 		tokens = tokens->next;
+// 		i++;
+// 	}
+// }
+
+
+// after free_tokens(tokens);
+// print_cmds(cmds); //for debugging
+
+
+void	print_cmds(t_cmd *cmds)
+{
+	int		c;
+	int		i;
+	t_redir	*r;
+
+	c = 0;
+	while (cmds)
 	{
-		printf("Token %d (type %d): [%s]\n", i, tokens->type, tokens->value);
-		tokens = tokens->next;
-		i++;
+		printf("=== CMD %d ===\n", c++);
+		i = 0;
+		while (cmds->args && cmds->args[i])
+		{
+			printf("  arg[%d]: [%s]\n", i, cmds->args[i]);
+			i++;
+		}
+		r = cmds->redirs;
+		while (r)
+		{
+			printf("  redir (type %d): -> [%s]\n", r->type, r->target);
+			r = r->next;
+		}
+		cmds = cmds->next;
 	}
 }

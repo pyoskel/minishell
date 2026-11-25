@@ -26,20 +26,6 @@
 # include "parsing.h"
 # include <fcntl.h>
 
-typedef struct  s_redir
-{
-    t_token_type    type;
-    char            *target;
-    struct s_redir  *next;
-}   t_redir;
-
-typedef struct  s_cmd
-{
-    char            **av;
-    t_redir         *redirs;
-    struct s_cmd    *next;
-}   t_cmd;
-
 /* ========================================================================== */
 /*                     2. INTERNAL PARSER STRUCTURES                          */
 /* ========================================================================== */
