@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:48 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/24 08:19:49 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/25 20:34:55 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,32 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
+typedef struct s_redir
+{
+	t_token_type	type;
+	char			*target;
+	struct s_redir	*next;
+}					t_redir;
+
+typedef struct s_cmd
+{
+	char			**args;
+	t_redir			*redirs;
+	struct s_cmd	*next;
+}					t_cmd;
+
 t_token_type	get_token_type(const char *s);
 t_token			*tokenize_words(const char *line);
 t_token			*create_token(char *content);
 void			add_token_back(t_token **head, t_token *new_node);
 void			free_tokens(t_token *tokens);
-void			print_tokens(t_token *tokens);
 int				validate_syntax(t_token *tokens);
 void			expand_tokens(t_token *tokens, char **env, int status);
+t_cmd			*build_cmds(t_token *tokens);
+void			free_cmds(t_cmd *cmds);
+void			print_cmds(t_cmd *cmds); // later, for testing
+
+// for testing
+// void			print_tokens(t_token *tokens);
 
 #endif
