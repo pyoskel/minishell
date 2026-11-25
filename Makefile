@@ -6,7 +6,7 @@
 #    By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/10/18 23:14:58 by pabartoc          #+#    #+#              #
-#    Updated: 2026/11/24 08:19:12 by pabartoc         ###   ########.fr        #
+#    Updated: 2026/11/25 10:48:15 by pabartoc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,14 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 
 # Source Files and Object Files
 SRCS        = $(SRC_DIR)/minishell.c \
-			  $(SRC_DIR)/parsing/parser.c \
-			  $(SRC_DIR)/parsing/tokens_list.c \
-			  $(SRC_DIR)/parsing/syntax_check.c \
+			  $(SRC_DIR)/parsing/cmd_builder.c \
 			  $(SRC_DIR)/parsing/expander.c \
-			  $(SRC_DIR)/exec/executor.c \
+			  $(SRC_DIR)/parsing/parser.c \
+			  $(SRC_DIR)/parsing/syntax_check.c \
+			  $(SRC_DIR)/parsing/tokens_list.c \
 			  $(SRC_DIR)/exec/builtins.c \
-			  $(SRC_DIR)/exec/env.c
+			  $(SRC_DIR)/exec/env.c \
+			  $(SRC_DIR)/exec/executor.c
 
 OBJS        = $(SRCS:.c=.o)
 
