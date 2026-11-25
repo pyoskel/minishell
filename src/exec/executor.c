@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 11:53:36 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/25 21:20:34 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/25 23:07:35 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,27 @@ static char *find_path(char *cmd, char **envp)
     return (free_tab(dirs), NULL);
 }
 
+static int  exec_builtin_redir(t_cmd *cmd, t_shell *shell)
+{
+    int saved_in;
+    int saved_out;
+    int status;
+
+    if (!cmd->redirs)
+        return (exec_builtin(cmd->args, shell));
+    saved_in = dup(0);
+    saved_out = dup(1);
+    status = 1;
+
+    if (apply_redirs(cmd->redirs) == 0)
+        status = exec_builtin(cmd->args, shell);
+    dup2(saved_in, 0);
+    dup2(saved_out, 1);
+    close(saved_in);
+    close(saved_out);
+    return (status);
+}
+
 int exec_simple(t_cmd *cmd, t_shell *shell)
 {
     pid_t   pid;
@@ -65,7 +86,7 @@ int exec_simple(t_cmd *cmd, t_shell *shell)
     if (!cmd || !cmd->args || !cmd->args[0])
         return (0);
     if (is_builtin(cmd->args[0]))
-        return (exec_builtin(cmd->args, shell));
+        return (exec_builtin_redir(cmd, shell));
     pid = fork();
     if (pid == -1)
         return (perror("fork"), 1);
