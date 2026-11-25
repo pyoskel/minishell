@@ -23,7 +23,6 @@ typedef struct s_shell
 
 int     exec_simple(char **av, t_shell *shell);
 void    free_tab(char **tab);
-char    **tokens_to_av(t_token *tokens);
 int     is_builtin(char *cmd);
 int     exec_builtin(char **av, t_shell *shell);
 char    **dup_env(char **envp);
