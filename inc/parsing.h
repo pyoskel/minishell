@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:48 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/24 06:17:15 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/24 08:19:49 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void			add_token_back(t_token **head, t_token *new_node);
 void			free_tokens(t_token *tokens);
 void			print_tokens(t_token *tokens);
 int				validate_syntax(t_token *tokens);
+void			expand_tokens(t_token *tokens, char **env, int status);
 
 #endif
