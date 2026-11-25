@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/24 06:30:49 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/25 04:26:16 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av, char **envp)
 {
     char *input;
     char **args;
-	t_token	*tokens; //for print_tokens (delete later)
+	t_token	*tokens;
     t_shell shell;
     
     (void)ac;
@@ -35,15 +35,19 @@ int	main(int ac, char **av, char **envp)
         free(input);
         if (tokens && validate_syntax(tokens))
 		{
-			print_tokens(tokens);
+			expand_tokens(tokens, shell.env, shell.last_status);
+			print_tokens(tokens); //for debugging (delete later)
 			args = tokens_to_av(tokens);
 			free_tokens(tokens);
 			if (args && args[0])
 				shell.last_status = exec_simple(args, &shell);
 			free_tab(args);
 		}
-        else
+        else if (tokens)
+		{
+			shell.last_status = 2;
 			free_tokens(tokens);
+		}
     }
     free_tab(shell.env);
     printf("\nExit\n");
