@@ -31,8 +31,14 @@ SRCS        = $(SRC_DIR)/minishell.c \
 			  $(SRC_DIR)/parsing/syntax_check.c \
 			  $(SRC_DIR)/parsing/tokens_list.c \
 			  $(SRC_DIR)/exec/builtins.c \
+			  $(SRC_DIR)/exec/builtin_echo_exit.c \
+			  $(SRC_DIR)/exec/builtin_cd_export.c \
+			  $(SRC_DIR)/exec/export_print.c \
 			  $(SRC_DIR)/exec/env.c \
+			  $(SRC_DIR)/exec/env_set.c \
 			  $(SRC_DIR)/exec/executor.c \
+			  $(SRC_DIR)/exec/path.c \
+			  $(SRC_DIR)/exec/pipeline.c \
 			  $(SRC_DIR)/exec/redirs.c \
 			  $(SRC_DIR)/exec/signals.c
 
