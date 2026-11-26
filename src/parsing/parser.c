@@ -29,8 +29,8 @@ static int	operator_len(const char *s)
 
 static int	word_len_quote(const char *s)
 {
-	int len;
-	char quote;
+	int		len;
+	char	quote;
 
 	len = 0;
 	quote = 0;
@@ -49,7 +49,7 @@ static int	word_len_quote(const char *s)
 		printf("minishell: syntax error: unclosed quote\n");
 		return (-1);
 	}
-	return(len);
+	return (len);
 }
 
 t_token_type	get_token_type(const char *s)
@@ -72,7 +72,7 @@ t_token	*tokenize_words(const char *line)
 	t_token	*head;
 	t_token	*node;
 	int		i;
-	int		start;
+	int		len;
 
 	head = NULL;
 	i = 0;
@@ -82,19 +82,16 @@ t_token	*tokenize_words(const char *line)
 			i++;
 		if (!line[i])
 			break ;
-		start = i;
-		if (operator_len(&line[i]) > 0)
-			i += operator_len(&line[i]);
-		else
-		{
-			if (word_len_quote(&line[i]) < 0)
-				return (free_tokens(head), NULL);
-			i+= word_len_quote(&line[i]);
-		}
-		node = create_token(ft_substr(line, start, i - start));
+		len = operator_len(&line[i]);
+		if (len == 0)
+			len = word_len_quote(&line[i]);
+		if (len < 0)
+			return (free_tokens(head), NULL);
+		node = create_token(ft_substr(line, i, len));
 		if (!node)
 			return (free_tokens(head), NULL);
 		add_token_back(&head, node);
+		i += len;
 	}
 	return (head);
 }

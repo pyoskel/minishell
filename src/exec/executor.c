@@ -167,7 +167,7 @@ static int  exec_pipeline(t_cmd *cmds, t_shell *shell)
         if (cmds->next && pipe(pfd) == -1)
             return (perror("pipe"), 1);
         pid = fork();
-        if (pid = 0)
+        if (pid == 0)
         {
             if (prev_fd != -1)
                 (dup2(prev_fd, 0), close(prev_fd));

@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/25 10:48:37 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/25 20:14:14 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/25 23:10:33 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 static int	count_args(t_token *curr)
 {
 	int	count;
+
 	count = 0;
 	while (curr && curr->type != TOKEN_PIPE)
 	{
@@ -34,6 +35,7 @@ static int	add_redir(t_cmd *cmd, t_token *curr)
 {
 	t_redir	*node;
 	t_redir	*last;
+
 	node = malloc(sizeof(t_redir));
 	if (!node)
 		return (0);

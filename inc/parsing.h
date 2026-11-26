@@ -6,7 +6,7 @@
 /*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:48 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/25 20:34:55 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/25 22:20:57 by pabartoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int				validate_syntax(t_token *tokens);
 void			expand_tokens(t_token *tokens, char **env, int status);
 t_cmd			*build_cmds(t_token *tokens);
 void			free_cmds(t_cmd *cmds);
-void			print_cmds(t_cmd *cmds); // later, for testing
-
-// for testing
-// void			print_tokens(t_token *tokens);
+// void			print_tokens(t_token *tokens); // for debugging
+// void			print_cmds(t_cmd *cmds); // for debugging
 
 #endif
