@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 17:57:04 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/25 23:06:33 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/26 02:00:40 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char    *get_env_value(char **env, char *name);
 int     set_env_value(t_shell *shell, char *name, char *value);
 void    unset_env_value(t_shell *shell, char *name);
 int     apply_redirs(t_redir *redirs);
+int     exec_cmds(t_cmd *cmds, t_shell *shell);
 
 #endif
