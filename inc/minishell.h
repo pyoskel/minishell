@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:23:19 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/25 19:52:45 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/26 02:31:57 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "libft.h"
 # include "parsing.h"
 # include <fcntl.h>
+# include <signal.h>
 
 /* ========================================================================== */
 /*                     2. INTERNAL PARSER STRUCTURES                          */

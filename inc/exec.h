@@ -6,7 +6,7 @@
 /*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 17:57:04 by esttina           #+#    #+#             */
-/*   Updated: 2026/11/26 02:00:40 by esttina          ###   ########.fr       */
+/*   Updated: 2026/11/26 02:37:57 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef struct s_shell
     int last_status;
 }   t_shell;
 
+extern volatile sig_atomic_t    g_sig;
+
 int     exec_simple(t_cmd *cmd, t_shell *shell);
 void    free_tab(char **tab);
 int     is_builtin(char *cmd);
@@ -31,5 +33,9 @@ int     set_env_value(t_shell *shell, char *name, char *value);
 void    unset_env_value(t_shell *shell, char *name);
 int     apply_redirs(t_redir *redirs);
 int     exec_cmds(t_cmd *cmds, t_shell *shell);
+void    setup_signals_prompt(void);
+void    setup_signals_wait(void);
+void    setup_signals_child(void);
+
 
 #endif

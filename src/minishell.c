@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabartoc <pabartoc@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: esttina <esttina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 23:24:34 by pabartoc          #+#    #+#             */
-/*   Updated: 2026/11/25 22:21:21 by pabartoc         ###   ########.fr       */
+/*   Updated: 2026/11/26 02:51:24 by esttina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,15 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	shell.env = dup_env(envp);
 	shell.last_status = 0;
+    setup_signals_prompt();
 	while (1)
 	{
 		input = readline("minishell$ ");
+        if (g_sig == SIGINT)
+        {
+            shell.last_status = 130;
+            g_sig = 0;
+        }
 		if (!input)
 			break ;
 		process_line(input, &shell);

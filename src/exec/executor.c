@@ -77,42 +77,58 @@ static int  exec_builtin_redir(t_cmd *cmd, t_shell *shell)
     return (status);
 }
 
-int exec_simple(t_cmd *cmd, t_shell *shell)
+static int	decode_status(int status)
 {
-    pid_t   pid;
-    int     status;
-    char    *path;
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
+		else if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("Quit: 3", 2);
+		return (128 + WTERMSIG(status));
+	}
+	return (1);
+}
 
-    if (!cmd || !cmd->args || !cmd->args[0])
-        return (0);
-    if (is_builtin(cmd->args[0]))
-        return (exec_builtin_redir(cmd, shell));
-    pid = fork();
-    if (pid == -1)
-        return (perror("fork"), 1);
-    if (pid == 0)
-    {
-        path = find_path(cmd->args[0], shell->env);
-        if (!path)
-        {
-            ft_putstr_fd(cmd->args[0], 2);
-            ft_putstr_fd(": command not found\n", 2);
-            exit(127);
-        }
-        if (apply_redirs(cmd->redirs) != 0)
-        {
-            free(path);
-            exit(1);
-        }
-        execve(path, cmd->args, shell->env);
-        perror(cmd->args[0]);
-        free(path);
-        exit(127); // command not found
-    }
-    waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        return (WEXITSTATUS(status));
-    return (1);
+int	exec_simple(t_cmd *cmd, t_shell *shell)
+{
+	pid_t	pid;
+	int		status;
+	char	*path;
+
+	if (!cmd || !cmd->args || !cmd->args[0])
+		return (0);
+	if (is_builtin(cmd->args[0]))
+		return (exec_builtin_redir(cmd, shell));
+	setup_signals_wait();
+	pid = fork();
+	if (pid == -1)
+		return (setup_signals_prompt(), perror("fork"), 1);
+	if (pid == 0)
+	{
+		setup_signals_child();
+		path = find_path(cmd->args[0], shell->env);
+		if (!path)
+		{
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			exit(127);
+		}
+		if (apply_redirs(cmd->redirs) != 0)
+		{
+			free(path);
+			exit(1);
+		}
+		execve(path, cmd->args, shell->env);
+		perror(cmd->args[0]);
+		free(path);
+		exit(127);
+	}
+	waitpid(pid, &status, 0);
+	setup_signals_prompt();
+	return (decode_status(status));
 }
 
 static void run_child_cmd(t_cmd *cmd, t_shell *shell)
@@ -136,52 +152,50 @@ static void run_child_cmd(t_cmd *cmd, t_shell *shell)
     exit(127);       
 }
 
-static int  wait_pipeline(pid_t last_pid)
+static int	wait_pipeline(pid_t last_pid)
 {
-    int status;
-    int last_status;
+	int	status;
+	int	last_status;
 
-    last_status = 0;
-    if (last_pid > 0 && waitpid(last_pid, &status, 0) > 0)
-    {
-        if (WIFEXITED(status))
-            last_status = WEXITSTATUS(status);
-        else
-            last_status = 1;
-    }
-    while (wait(NULL) > 0)
-        ;
-    return (last_status);
+	last_status = 0;
+	if (last_pid > 0 && waitpid(last_pid, &status, 0) > 0)
+		last_status = decode_status(status);
+	while (wait(NULL) > 0)
+		;
+	setup_signals_prompt();
+	return (last_status);
 }
 
-static int  exec_pipeline(t_cmd *cmds, t_shell *shell)
+static int	exec_pipeline(t_cmd *cmds, t_shell *shell)
 {
-    int     pfd[2];
-    int     prev_fd;
-    pid_t   pid;
+	int		pfd[2];
+	int		prev_fd;
+	pid_t	pid;
 
-    prev_fd = -1;
-    pid = -1;
-    while (cmds)
-    {
-        if (cmds->next && pipe(pfd) == -1)
-            return (perror("pipe"), 1);
-        pid = fork();
-        if (pid == 0)
-        {
-            if (prev_fd != -1)
-                (dup2(prev_fd, 0), close(prev_fd));
-            if (cmds->next)
-                (dup2(pfd[1], 1), close(pfd[0]), close(pfd[1]));
-            run_child_cmd(cmds, shell);
-        }
-        if (prev_fd != -1)
-            close(prev_fd);
-        if (cmds->next)
-            (close(pfd[1]), prev_fd = pfd[0]);
-        cmds = cmds->next;
-    }
-    return (wait_pipeline(pid));
+	prev_fd = -1;
+	pid = -1;
+	setup_signals_wait();
+	while (cmds)
+	{
+		if (cmds->next && pipe(pfd) == -1)
+			return (setup_signals_prompt(), perror("pipe"), 1);
+		pid = fork();
+		if (pid == 0)
+		{
+			setup_signals_child();
+			if (prev_fd != -1)
+				(dup2(prev_fd, 0), close(prev_fd));
+			if (cmds->next)
+				(dup2(pfd[1], 1), close(pfd[0]), close(pfd[1]));
+			run_child_cmd(cmds, shell);
+		}
+		if (prev_fd != -1)
+			close(prev_fd);
+		if (cmds->next)
+			(close(pfd[1]), prev_fd = pfd[0]);
+		cmds = cmds->next;
+	}
+	return (wait_pipeline(pid));
 }
 
 int exec_cmds(t_cmd *cmds, t_shell *shell)
