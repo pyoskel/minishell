@@ -27,6 +27,7 @@
 # include "parsing.h"
 # include <fcntl.h>
 # include <signal.h>
+# include <errno.h>
 
 /* ========================================================================== */
 /*                     2. INTERNAL PARSER STRUCTURES                          */

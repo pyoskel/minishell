@@ -73,7 +73,7 @@ static void	process_line(char *input, t_shell *shell)
 		expand_tokens(tokens, shell->env, shell->last_status);
 		cmds = build_cmds(tokens);
 		free_tokens(tokens);
-		if (cmds && cmds->args && cmds->args[0])
+		if (cmds)
 			shell->last_status = exec_cmds(cmds, shell);
 		free_cmds(cmds);
 	}

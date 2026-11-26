@@ -69,7 +69,12 @@ static int  exec_builtin_redir(t_cmd *cmd, t_shell *shell)
     status = 1;
 
     if (apply_redirs(cmd->redirs) == 0)
-        status = exec_builtin(cmd->args, shell);
+    {
+        if (cmd->args && cmd->args[0])
+            status = exec_builtin(cmd->args, shell);
+        else
+            status = 0;
+    }
     dup2(saved_in, 0);
     dup2(saved_out, 1);
     close(saved_in);
@@ -92,14 +97,44 @@ static int	decode_status(int status)
 	return (1);
 }
 
+static void	run_child_cmd(t_cmd *cmd, t_shell *shell)
+{
+	char	*path;
+
+	if (apply_redirs(cmd->redirs) != 0)
+		exit(1);
+	if (!cmd->args || !cmd->args[0])
+		exit(0);
+	if (is_builtin(cmd->args[0]))
+		exit(exec_builtin(cmd->args, shell));
+	path = find_path(cmd->args[0], shell->env);
+	if (!path)
+	{
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
+	}
+	execve(path, cmd->args, shell->env);
+	perror(cmd->args[0]);
+	free(path);
+	if (errno == EACCES || errno == EISDIR)
+		exit(126);
+	exit(127);
+}
+
 int	exec_simple(t_cmd *cmd, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
-	char	*path;
 
-	if (!cmd || !cmd->args || !cmd->args[0])
+	if (!cmd)
 		return (0);
+	if (!cmd->args || !cmd->args[0])
+	{
+		if (!cmd->redirs)
+			return (0);
+		return (exec_builtin_redir(cmd, shell));
+	}
 	if (is_builtin(cmd->args[0]))
 		return (exec_builtin_redir(cmd, shell));
 	setup_signals_wait();
@@ -109,47 +144,11 @@ int	exec_simple(t_cmd *cmd, t_shell *shell)
 	if (pid == 0)
 	{
 		setup_signals_child();
-		path = find_path(cmd->args[0], shell->env);
-		if (!path)
-		{
-			ft_putstr_fd(cmd->args[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			exit(127);
-		}
-		if (apply_redirs(cmd->redirs) != 0)
-		{
-			free(path);
-			exit(1);
-		}
-		execve(path, cmd->args, shell->env);
-		perror(cmd->args[0]);
-		free(path);
-		exit(127);
+		run_child_cmd(cmd, shell);
 	}
 	waitpid(pid, &status, 0);
 	setup_signals_prompt();
 	return (decode_status(status));
-}
-
-static void run_child_cmd(t_cmd *cmd, t_shell *shell)
-{
-    char    *path;
-
-    if (apply_redirs(cmd->redirs) != 0)
-        exit(1);
-    if (is_builtin(cmd->args[0]))
-        exit(exec_builtin(cmd->args, shell));
-    path = find_path(cmd->args[0], shell->env);
-    if (!path)
-    {
-        ft_putstr_fd(cmd->args[0], 2);
-        ft_putstr_fd(": command not found\n", 2);
-        exit(127);
-    }
-    execve(path, cmd->args, shell->env);
-    perror(cmd->args[0]);
-    free(path);
-    exit(127);       
 }
 
 static int	wait_pipeline(pid_t last_pid)
